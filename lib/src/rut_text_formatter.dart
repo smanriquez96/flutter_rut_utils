@@ -3,6 +3,8 @@ import 'package:rut_utils/src/rut_utils.dart';
 
 import 'constants/constants.dart';
 
+/// Class to be used as a inputFormatters of a [TextFormField].
+/// It receives a [TextEditingValue] and format its value as a Chilean RUT.
 class RutFormatter extends TextInputFormatter {
   @override
   TextEditingValue formatEditUpdate(

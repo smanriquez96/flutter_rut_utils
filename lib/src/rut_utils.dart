@@ -1,5 +1,7 @@
 import 'package:collection/collection.dart';
 
+/// Uses de modulus 11 to calculate the verification digit of a Chilean RUT
+/// from it's digits.
 String getRutCheckDigit(String rutWithoutVerificationDigit) {
   var reverseFactorsArray = List<int>.generate(
           rutWithoutVerificationDigit.length,
@@ -21,6 +23,7 @@ String getRutCheckDigit(String rutWithoutVerificationDigit) {
   }
 }
 
+/// Returns a [String] with "." and "-" added to the [rut].
 String shortVersionRutFormat(String rut) {
   var output = StringBuffer();
   var mp = {1: '.', 4: '.', 7: '-'};

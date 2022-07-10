@@ -1,5 +1,5 @@
 name: rut_utils
-description: Rut validation and formatting package.
+description: Chilean RUT validation and formatting package. It includes methods to validate a RUT and a RutFormatter class to use on a Form.
 version: 0.1.0
 repository: https://github.com/smanriquez96/flutter_rut_utils
 
@@ -17,6 +17,5 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
-
 
 flutter:
