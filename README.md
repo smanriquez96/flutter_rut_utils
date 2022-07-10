@@ -9,7 +9,7 @@ It uses the [official algorithim](https://www.registrocivil.cl/PortalOI/Manuales
 flutter pub add rut_utils
 ```
 
-## Validation
+### Validation
 ```dart
 import 'package:rut_utils/rut_utils.dart';
 
@@ -20,7 +20,7 @@ var rut = '11.111.111-9';
 var isValid = isRutValid(rut); // false
 ```
 
-## Formatting
+### Formatting
 ```dart
 import 'package:rut_utils/rut_utils.dart';
 
@@ -31,7 +31,7 @@ var formattedRut = '11.111.111-9';
 var rut = deFormatRut(formattedRut); // 111111119
 ```
 
-## Text Formatter
+### Text Formatter
 ```dart
 import 'package:flutter/material.dart';
 import 'package:rut_utils/rut_utils.dart';
