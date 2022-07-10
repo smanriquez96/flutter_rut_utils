@@ -1,6 +1,7 @@
 name: rut_utils
 description: Rut validation and formatting package.
 version: 0.1.0
+repository: https://github.com/smanriquez96/flutter_rut_utils
 
 
 environment:
