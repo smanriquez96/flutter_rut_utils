@@ -2,7 +2,7 @@ import 'package:collection/collection.dart';
 
 /// Uses de modulus 11 to calculate the verification digit of a Chilean RUT
 /// from it's digits.
-String getRutCheckDigit(String rutWithoutVerificationDigit) {
+String getRutVerificationDigit(String rutWithoutVerificationDigit) {
   var reverseFactorsArray = List<int>.generate(
           rutWithoutVerificationDigit.length,
           (index) => int.parse(rutWithoutVerificationDigit[index]))
@@ -24,44 +24,32 @@ String getRutCheckDigit(String rutWithoutVerificationDigit) {
 }
 
 /// Returns a [String] with "." and "-" added to the [rut].
-String shortVersionRutFormat(String rut) {
-  var output = StringBuffer();
-  var mp = {1: '.', 4: '.', 7: '-'};
-
-  for (var i = 0; i < rut.length; i++) {
-    if (mp.containsKey(i)) {
-      output.write(mp[i]);
-    }
-    output.write(rut[i]);
-  }
-
-  return output.toString();
-}
-
-/// Returns a [String] with "." and "-" added to the [rut].
 String formatRut(String rut) {
-  var rutLength = rut.length;
-  var verificationDigit = rut.substring(rutLength - 1);
-  var result =
-      '${rut.substring(rutLength - 4, rutLength - 1)}-$verificationDigit';
-  for (var i = 4; i < rutLength; i += 3) {
-    var start = rutLength - i - 3;
-    var end = rutLength - i;
-    if (start.isNegative) {
-      start = 0;
-    }
-    result = '${rut.substring(start, end)}.$result';
+  if (rut.isEmpty) {
+    return rut;
   }
-  return result;
+  var rutLength = rut.length;
+  var verificationDigit = '-${rut.substring(rutLength - 1)}';
+
+  var result = '';
+  for (var i = 1; i < rutLength; i += 1) {
+    var start = rutLength - i - 1;
+    var end = rutLength - i;
+    result = '${rut.substring(start, end)}$result';
+    if (i % 3 == 0) {
+      result = '.$result';
+    }
+  }
+  return '$result$verificationDigit';
 }
 
 /// Evaluates whether the [rut] is valid or not using the oficial algorithim
-/// provided by the Chilean goverment.
-bool isRutValid(String rut) {
-  var rutElements = rut.replaceAll('.', '').split('-');
-  var rutWithoutVerificationDigit = rutElements.first;
-  var verificationDigit = rutElements.last;
-  var checkDigit = getRutCheckDigit(rutWithoutVerificationDigit);
+/// provided by the Chilean government.
+bool isUnFormattedRutValid(String rut) {
+  var rutLength = rut.length;
+  var rutWithoutVerificationDigit = rut.substring(0, rutLength - 1);
+  var verificationDigit = rut.substring(rutLength - 1);
+  var checkDigit = getRutVerificationDigit(rutWithoutVerificationDigit);
 
   if (checkDigit != verificationDigit) {
     return false;
@@ -70,9 +58,26 @@ bool isRutValid(String rut) {
   return true;
 }
 
-/// Returns a [String] with the "." and "-" removed from de [value].
-String deFormatRut(String value) =>
-    value.replaceAll('.', '').replaceAll('-', '');
+/// Evaluates whether the [rut] is valid or not using the oficial algorithim
+/// provided by the Chilean government.
+bool isRutValid(String rut) {
+  if (!rut.contains('-')) {
+    return isUnFormattedRutValid(rut.replaceAll('.', ''));
+  }
+  var rutElements = rut.replaceAll('.', '').split('-');
+  var rutWithoutVerificationDigit = rutElements.first;
+  var verificationDigit = rutElements.last;
+  var checkDigit = getRutVerificationDigit(rutWithoutVerificationDigit);
+
+  if (checkDigit != verificationDigit) {
+    return false;
+  }
+
+  return true;
+}
+
+/// Returns a [String] with the "." and "-" removed from de [rut].
+String deFormatRut(String rut) => rut.replaceAll('.', '').replaceAll('-', '');
 
 /// Returns [null] if the given [rut] is valid.
 ///
