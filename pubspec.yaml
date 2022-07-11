@@ -1,6 +1,6 @@
 name: rut_utils
 description: Chilean RUT validation and formatting package. It includes methods to validate a RUT and a RutFormatter class to use on a Form.
-version: 0.1.1
+version: 0.1.2
 repository: https://github.com/smanriquez96/flutter_rut_utils
 
 
